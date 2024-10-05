@@ -27,13 +27,14 @@ const Jobs = () => {
         <p>Query status: {jobsIdQuery.status}</p>
         <p>Global fetching: {isFetching}</p>
 
-        <h2>These are the ids</h2>
+        <h2>Single Queries</h2>
         {jobsIdQuery.data.map((each: any) => (
           <p key={each._id}>id: {each._id}</p>
         ))}
       </div>
 
       {/* Rendering job queries */}
+      <h2 style={{ marginTop: "4rem" }}>Multiple Queries</h2>
       <div>
         {jobsQueries.map((each: any, index) => {
           if (each.isLoading) {
@@ -45,8 +46,11 @@ const Jobs = () => {
           }
 
           return (
-            <li key={each.data.data.postJob._id}>
-              {each.data.data.postJob._id}
+            <li key={each.data.job._id}>
+              <div>Id: {each.data.job._id}</div>
+              <span>Company: {each.data.job.company}</span>
+              <br />
+              <span>Job Position: {each.data.job.position}</span>
             </li>
           );
         })}
