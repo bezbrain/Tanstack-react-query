@@ -5,9 +5,17 @@ const BASE_URL = `https://jobtrackier.onrender.com/api/v1`;
 // Create axio instance
 const axiosInstance = axios.create({ baseURL: BASE_URL });
 
+// Fetching jobs all at once
 export const getJobsId = async () => {
   const data = (await axiosInstance.get("postJob")).data.data.postJobsList;
 
-  console.log(data);
+  // console.log(data);
+  return data;
+};
+
+// Fetching jobs one by one
+export const getJobs = async (id: string) => {
+  const data = (await axiosInstance.get(`postJob/${id}`)).data;
+  // console.log(data);
   return data;
 };
