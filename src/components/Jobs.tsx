@@ -21,7 +21,7 @@ const Jobs = () => {
   }
 
   return (
-    <section>
+    <section style={{ display: "flex", justifyContent: "space-around" }}>
       <div>
         <p>Query function status: {jobsIdQuery.fetchStatus}</p>
         <p>Query status: {jobsIdQuery.status}</p>
@@ -34,26 +34,28 @@ const Jobs = () => {
       </div>
 
       {/* Rendering job queries */}
-      <h2 style={{ marginTop: "4rem" }}>Multiple Queries</h2>
       <div>
-        {jobsQueries.map((each: any, index) => {
-          if (each.isLoading) {
-            return <li key={index}>Loading job details...</li>;
-          }
+        <h2>Multiple Queries</h2>
+        <div>
+          {jobsQueries.map((each: any, index) => {
+            if (each.isLoading) {
+              return <li key={index}>Loading job details...</li>;
+            }
 
-          if (each.isError) {
-            return <li key={index}>Error loading job details</li>;
-          }
+            if (each.isError) {
+              return <li key={index}>Error loading job details</li>;
+            }
 
-          return (
-            <li key={each.data.job._id}>
-              <div>Id: {each.data.job._id}</div>
-              <span>Company: {each.data.job.company}</span>
-              <br />
-              <span>Job Position: {each.data.job.position}</span>
-            </li>
-          );
-        })}
+            return (
+              <li key={each.data.data.job._id}>
+                <div>Id: {each.data.data.job._id}</div>
+                <span>Company: {each.data.data.job.company}</span>
+                <br />
+                <span>Job Position: {each.data.data.job.position}</span>
+              </li>
+            );
+          })}
+        </div>
       </div>
     </section>
   );
