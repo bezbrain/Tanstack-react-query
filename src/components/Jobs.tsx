@@ -1,3 +1,5 @@
+import { useState } from "react";
+import { useDeleteJob } from "../services/mutations";
 import { useJobs, useJobsIds } from "../services/queries";
 import { useIsFetching } from "@tanstack/react-query"; // This is used to help know if my data is fetching or not
 
@@ -5,12 +7,24 @@ const Jobs = () => {
   const jobsIdQuery = useJobsIds();
   const isFetching = useIsFetching();
 
+  const [jobId, setJobId] = useState("");
+
   // Only call useJobs if jobsIdQuery is successful and data exists
   const jobIds = jobsIdQuery.data
     ? jobsIdQuery.data.map((each: { _id: string }) => each._id)
     : [];
   const jobsQueries = useJobs(jobIds); // Fetch multiple queries
   // console.log(jobsQueries);
+
+  // Delete job hook
+  const deleteJobMutation = useDeleteJob(setJobId);
+
+  // DELETE A JOB
+  const handleClick = (id: string) => {
+    // console.log(id);
+    setJobId(id);
+    deleteJobMutation.mutate(id);
+  };
 
   if (jobsIdQuery.isPending) {
     return <span>Loading...</span>;
@@ -29,7 +43,17 @@ const Jobs = () => {
 
         <h2>Single Queries</h2>
         {jobsIdQuery.data.map((each: any) => (
-          <p key={each._id}>id: {each._id}</p>
+          <div
+            key={each._id}
+            style={{ display: "flex", alignItems: "center", gap: "16px" }}
+          >
+            <p>id: {each._id}</p>
+            <button onClick={() => handleClick(each._id)}>
+              {deleteJobMutation.isPending && each._id === jobId
+                ? "Loading"
+                : "Delete"}
+            </button>
+          </div>
         ))}
       </div>
 

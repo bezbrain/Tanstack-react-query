@@ -46,3 +46,14 @@ export const createJob = async (reqBody: Object) => {
   console.log(data);
   return data;
 };
+
+// Delete a job
+export const deleteJob = async (id: string) => {
+  const data = await axiosInstance.delete(`/jobs/${id}`, {
+    headers: {
+      Authorization: `Bearer ${token()}`,
+    },
+  });
+  console.log(data);
+  return data;
+};

@@ -8,7 +8,7 @@ function App() {
   return (
     <>
       <Jobs />
-      {/* <CreateJob /> */}
+      <CreateJob />
     </>
   );
 }
